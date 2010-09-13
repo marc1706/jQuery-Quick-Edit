@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<!-- $Id$ -->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[jQuery Quick Edit - Update 0.2.0 to 1.0.0]]></title>
+		<description lang="en"><![CDATA[Edit posts quickly without reloading the page.]]></description>
+		<author-group>
+			<author>
+				<realname><![CDATA[Marc Alexander]]></realname>
+				<username><![CDATA[marc1706]]></username>
+				<homepage><![CDATA[http://www.m-a-styles.de]]></homepage>
+				<email><![CDATA[admin@m-a-styles.de]]></email>
+			</author>
+		</author-group>
+		<mod-version>1.0.0</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.7-PL1</target-version>
+		</installation>
+		<link-group>
+			<link type="parent" href="../../install.xml" lang="en">Install Instructions</link>
+			<link type="parent" href="../../install.xml" lang="de">Installationsanleitung</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">Update subsilver2 from 0.2.0 to 1.0.0</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="de">Aktualisiere subsilver2 von 0.2.0 zu 1.0.0</link>
+		</link-group>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/styles/prosilver/template/quickedit/quickedit.html" to="styles/prosilver/template/quickedit/quickedit.html" />
+			<file from="root/styles/prosilver/template/quickedit/quickedit_header.html" to="styles/prosilver/template/quickedit/quickedit_header.html" />
+		</copy>
+		<diy-instructions lang="en">After editing all the files please do the following:
+
+Go to ACP->Styles->Templates-> And click "Refresh" for all your templates.
+Go to ACP->Styles->Themes-> And click "Refresh" for all your themes.
+Go to ACP->Styles->Imageset-> And click "Refresh" for all your imagesets.
+
+If you still do not see it, go to any topic and clear your browser cache.</diy-instructions>
+		<diy-instructions lang="de">Nach dem Editieren bitte noch folgendes ausführen:
+Gehe zu Admin-Bereich->Styles->Templates-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+Gehe zu Admin-Bereich->Styles->Themes-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+Gehe zu Admin-Bereich->Styles->Imageset-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+
+Wenn du immer noch nichts siehts, öffne irgendein beliebiges Thema und leere dort deinen Browser-Cache.</diy-instructions>
+	</action-group>
+</mod>

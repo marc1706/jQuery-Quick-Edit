@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<!-- $Id$ -->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[jQuery Quick Edit]]></title>
+		<description lang="en"><![CDATA[Edit posts quickly without reloading the page.]]></description>
+		<author-group>
+			<author>
+				<realname><![CDATA[Marc Alexander]]></realname>
+				<username><![CDATA[marc1706]]></username>
+				<homepage><![CDATA[http://www.m-a-styles.de]]></homepage>
+				<email><![CDATA[admin@m-a-styles.de]]></email>
+			</author>
+		</author-group>
+		<mod-version>1.0.0</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.7-PL1</target-version>
+		</installation>
+		<link-group>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">Subsilver2 Instructions</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="de">Subsilver2 Anleitung</link>
+			<link type="contrib" href="contrib/Prime_Post_Revisions.xml" lang="en">Prime Post Revisions Add-On</link>
+			<link type="contrib" href="contrib/Prime_Post_Revisions.xml" lang="de">Prime Post Revisions Add-On</link>
+			<link type="language" href="contrib/de.xml" lang="en">German Language</link>
+			<link type="language" href="contrib/de.xml" lang="de">Deutsche Sprache</link>
+			<link type="contrib" href="contrib/update_020_to_100/update.xml" lang="en">Update 0.2.0 to 1.0.0</link>
+			<link type="contrib" href="contrib/update_020_to_100/update.xml" lang="de">Aktualisiere 0.2.0 zu 1.0.0</link>
+			<link type="contrib" href="contrib/update_021_to_100/update.xml" lang="en">Update 0.2.1 to 1.0.0</link>
+			<link type="contrib" href="contrib/update_021_to_100/update.xml" lang="de">Aktualisiere 0.2.1 zu 1.0.0</link>
+		</link-group>
+		<history>
+			<entry>
+				<date>2010-09-09</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change>[Changed] Submitted to phpBB.com MOD-DB</change>
+				</changelog>
+				<changelog lang="de">
+					<change>[Geändert] An die phpBB.com MOD-DB geschickt</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-08-31</date>
+				<rev-version>0.2.1</rev-version>
+				<changelog lang="en">
+					<change>[New] Added German language</change>
+					<change>[New] Added Prime Post Revisions Add-On</change>
+					<change>[Changed] Renamed the javascript functions</change>
+				</changelog>
+				<changelog lang="de">
+					<change>[Neu] Deutsche Sprach hinzugefügt</change>
+					<change>[Neu] Prime Post Revisions Add-On hinzugefügt</change>
+					<change>[Geändert] Javascript Funktionen wurden umbenannt</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-08-23</date>
+				<rev-version>0.2.0</rev-version>
+				<changelog lang="en">
+					<change>First beta</change>
+				</changelog>
+				<changelog lang="de">
+					<change>Erste Beta</change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/quickedit.php" to="quickedit.php" />
+			<file from="root/styles/prosilver/imageset/en/icon_post_quickedit.gif" to="styles/prosilver/imageset/en/icon_post_quickedit.gif" />
+			<file from="root/styles/prosilver/template/*.*" to="styles/prosilver/template/*.*" />
+			<file from="root/styles/prosilver/theme/quickedit.css" to="styles/prosilver/theme/quickedit.css" />
+		</copy>
+		<open src="includes/acp/acp_styles.php">
+			<edit>
+				<find><![CDATA[ 'button_topic_reply',]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[ 'button_topic_reply',]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ 'icon_post_quickedit',]]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
+		<open src="language/en/acp/styles.php">
+			<edit>
+				<find><![CDATA[	'IMG_ICON_POST_EDIT'			=> 'Edit post',]]></find>
+				<action type="after-add"><![CDATA[	'IMG_ICON_POST_QUICKEDIT'		=> 'Quickedit post',]]></action>
+			</edit>
+		</open>
+		<open src="language/en/common.php">
+			<edit>
+				<find><![CDATA[	'YOU_NO_NEW_PM'		=> 'No new private messages are waiting for you.',]]></find>
+				<action type="after-add"><![CDATA[	// jQuery Quick Edit -- START
+	'QUICKEDIT_POST'					=> 'Quickedit post',
+	'ADVANCED_EDIT'						=> 'Advanced Edit',
+	// jQuery Quick Edit -- END]]></action>
+			</edit>
+		</open>
+		<open src="viewtopic.php">
+			<edit>
+				<find><![CDATA[	'WARN_IMG'			=> $user->img('icon_user_warn', 'WARN_USER'),]]></find>
+				<action type="after-add"><![CDATA[	// jQuery Quick Edit -- START
+	'QUICKEDIT_IMG'		=> $user->img('icon_post_quickedit', 'QUICKEDIT_POST'),
+	'U_QUICKEDIT' 			=> append_sid("{$phpbb_root_path}quickedit.$phpEx"),
+	// jQuery Quick Edit -- END]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/imageset/en/imageset.cfg">
+			<edit>
+				<find><![CDATA[img_icon_post_edit = icon_post_edit.gif*20*42]]></find>
+				<action type="after-add"><![CDATA[img_icon_post_quickedit = icon_post_quickedit.gif*20*74]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[</head>]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE quickedit/quickedit_header.html -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_footer.html">
+			<edit>
+				<find><![CDATA[</body>]]></find>
+				<action type="before-add"><![CDATA[<!-- JQuery Quickedit Pop Up -->
+<div id="popupQuickedit">  
+<!-- INCLUDE quickedit/quickedit.html -->
+</div>
+<div id="quickeditBackground"></div>
+<!-- JQuery Quickedit Pop Up END -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/viewtopic_body.html">
+			<edit>
+				<find><![CDATA[		<div class="postbody">]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[class="postbody"]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ id="post{postrow.POST_ID}"]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[					<!-- IF postrow.U_EDIT --><li class="edit-icon"><a href="{postrow.U_EDIT}" title="{L_EDIT_POST}"><span>{L_EDIT_POST}</span></a></li><!-- ENDIF -->]]></find>
+				<action type="before-add"><![CDATA[					<!-- IF postrow.U_EDIT --><li class="qe-icon"><a href="#" onclick="return false;" id="quickedit{postrow.POST_ID}" title="{L_QUICKEDIT_POST}"><span>{L_QUICKEDIT_POST}</span></a></li><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/buttons.css">
+			<edit>
+				<find><![CDATA[.edit-icon, .edit-icon a			{ background: none top left no-repeat; }]]></find>
+				<action type="after-add"><![CDATA[.qe-icon, .qe-icon a				{ background: none top left no-repeat; }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ul.profile-icons li.edit-icon	{ width: {IMG_ICON_POST_EDIT_WIDTH}px; height: {IMG_ICON_POST_EDIT_HEIGHT}px; }]]></find>
+				<action type="after-add"><![CDATA[ul.profile-icons li.qe-icon		{ width: {IMG_ICON_POST_QUICKEDIT_WIDTH}px; height: {IMG_ICON_POST_QUICKEDIT_HEIGHT}px; }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ul.profile-icons li.edit-icon	{ margin: 0 0 0 3px; }]]></find>
+				<action type="after-add"><![CDATA[ul.profile-icons li.qe-icon	{ margin: 0 0 0 3px; }]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/colours.css">
+			<edit>
+				<find><![CDATA[.edit-icon, .edit-icon a			{ background-image: url("{IMG_ICON_POST_EDIT_SRC}"); }]]></find>
+				<action type="after-add"><![CDATA[.qe-icon, .qe-icon a			{ background-image: url("{IMG_ICON_POST_QUICKEDIT_SRC}"); }]]></action>
+			</edit>
+		</open>
+		<diy-instructions lang="en">After editing all the files please do the following:
+
+Go to ACP->Styles->Templates-> And click "Refresh" for all your templates.
+Go to ACP->Styles->Themes-> And click "Refresh" for all your themes.
+Go to ACP->Styles->Imageset-> And click "Refresh" for all your imagesets.
+
+If you still do not see it, go to any topic and clear your browser cache.</diy-instructions>
+		<diy-instructions lang="de">Nach dem Editieren bitte noch folgendes ausführen:
+Gehe zu Admin-Bereich->Styles->Templates-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+Gehe zu Admin-Bereich->Styles->Themes-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+Gehe zu Admin-Bereich->Styles->Imageset-> und klicke bei allen bearbeiteten Styles auf "Aktualisieren".
+
+Wenn du immer noch nichts siehts, öffne irgendein beliebiges Thema und leere dort deinen Browser-Cache.</diy-instructions>
+	</action-group>
+</mod>
