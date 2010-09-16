@@ -2,7 +2,6 @@
 /** 
 *
 * @package jQuery Quick Edit
-* @version $Id$
 * @copyright (c) 2010 Marc Alexander(marc1706) www.m-a-styles.de
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
 *
