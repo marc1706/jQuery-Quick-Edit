@@ -139,10 +139,18 @@ switch($mode)
 			'MAX_FONT_SIZE'			=> (int) $config['max_post_font_size'],
 		));
 		$assign_template = true;
-		
 	break;
 	
 	case 'submit':
+		/* 
+		* only include functions_posting if we actually need it
+		* make sure we don't include it if it already has been included by some other MOD
+		*/
+		if(!function_exists('submit_post'))
+		{
+		  include($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
+		}
+
 		$sql = 'SELECT p.*, f.*, t.*, u.*
 				FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t, ' . FORUMS_TABLE . ' f, ' . USERS_TABLE . ' u
 				WHERE p.post_id = ' . (int)$post_id . ' 
@@ -161,7 +169,7 @@ switch($mode)
 			$location = ($first_loc) ? substr($location, 2, $first_loc) : substr($location, 2);
 			$post_data['forum_id'] = (int) $location; // don't remove (int)
 			
-			// if somebody previews a style using the style URL parameter, we need to do this
+			// if somebody previews a style using the style URL parameter the above might not work, so we check it again
 			if($post_data['forum_id'] < 1)
 			{
 				$location = request_var('f', 0);
@@ -286,15 +294,74 @@ switch($mode)
 			$edit_count = (isset($post_data['post_edit_count'])) ? $post_data['post_edit_count'] : 0; 
 		}
 		
-		$sql_ary = array(
-			'post_text'         => $message_parser->message,
-			'bbcode_uid'		=> $uid,
-			'bbcode_bitfield'   => $bitfield,
-			'post_edit_time'	=> $edit_time,
-			'post_edit_count'	=> $edit_count,
-			'post_edit_user'	=> $edit_user,
-
+		// Create the data array for submit_post
+		$data = array(
+		    // General Posting Settings
+		    'forum_id'          	=> $post_data['forum_id'],
+		    'topic_id'          	=> $post_data['topic_id'],
+		    'icon_id'           	=> $post_data['icon_id'],
+		    'post_id'			=> $post_data['post_id'],
+		    'poster_id'			=> $post_data['poster_id'],
+		    'topic_replies_real'	=> $post_data['topic_replies_real'],
+		    'topic_first_post_id'	=> $post_data['topic_first_post_id'],
+		    'topic_last_post_id'	=> $post_data['topic_last_post_id'],
+		
+		    // Defining Post Options
+		    'enable_bbcode' 	=> $post_data['enable_bbcode'],
+		    'enable_smilies'    => $post_data['enable_smilies'],
+		    'enable_urls'       => $post_data['enable_magic_url'],
+		    'enable_sig'        => $post_data['enable_sig'],
+		
+		    // Message Body
+		    'message'           => $message_parser->message,
+		    'message_md5'   	=> md5($message_parser->message),
+		
+		    // Values from generate_text_for_storage()
+		    'bbcode_bitfield'   => $bitfield,
+		    'bbcode_uid'        => $uid,
+		
+		    // Other Options
+		    'post_edit_locked'  => $post_data['post_edit_locked'],
+		    'post_edit_reason'	=> ($post_data['post_edit_reason']) ? $post_data['post_edit_reason'] : '',
+		    'topic_title'       => $post_data['topic_title'],
+		
+		    // Email Notification Settings
+		    'notify_set'        => false,
+		    'notify'            => false,
+		    'post_time'         => 0,
+		    'forum_name'        => $post_data['forum_name'],
+		
+		    // Indexing
+		    'enable_indexing'   => true,
+		
+		    // 3.0.6
+		    'force_approved_state'  => true, // post has already been approved
 		);
+
+		$poll = array(
+		    'poll_title'	=> $post_data['poll_title'],
+		    'poll_length'	=> $post_data['poll_length'],
+		    'poll_start'	=> $post_data['poll_start'],
+		    'poll_max_options'	=> $post_data['poll_max_options'],
+		    'poll_vote_change'	=> $post_data['poll_vote_change'],
+		    'poll_options'	=> array(),
+		);
+
+		// Get Poll Data
+		if ($poll['poll_start'])
+		{
+			$sql = 'SELECT poll_option_text
+				FROM ' . POLL_OPTIONS_TABLE . "
+				WHERE topic_id = $topic_id
+				ORDER BY poll_option_id";
+			$result = $db->sql_query($sql);
+
+			while ($row = $db->sql_fetchrow($result))
+			{
+				$poll['poll_options'][] = trim($row['poll_option_text']);
+			}
+			$db->sql_freeresult($result);
+		}
 		
 		$qe_error .= implode('<br />', $message_parser->warn_msg);
 		$qe_action = (strlen($qe_action) > 0) ? $qe_action : 'return'; // don't overwrite already existing qe_action
@@ -349,7 +416,7 @@ switch($mode)
 			// Add up the flag options...
 			$bbcode_options = (($post_data['enable_bbcode']) ? OPTION_FLAG_BBCODE : 0) + (($post_data['enable_smilies']) ? OPTION_FLAG_SMILIES : 0) + (($post_data['enable_magic_url']) ? OPTION_FLAG_LINKS : 0);
 			// Parse the post
-			$text = generate_text_for_display($sql_ary['post_text'], $sql_ary['bbcode_uid'], $sql_ary['bbcode_bitfield'], $bbcode_options);
+			$text = generate_text_for_display($data['message'], $data['bbcode_uid'], $data['bbcode_bitfield'], $bbcode_options);
 
 			// Parse attachments
 			if (!empty($attachments[$post_data['post_id']]))
@@ -394,9 +461,12 @@ switch($mode)
 			* since qe_error is empty, qe_action is also set to empty in the return variable
 			*/
 			$return = "0{/qe_seperator}0{/qe_seperator}$l_edited_by{/qe_seperator}$text"; 
-			// Don't execute this before we checked for errors
-			$sql = 'UPDATE ' . POSTS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . " WHERE post_id = $post_id";	
-			$db->sql_query($sql);
+			/* 
+			* Don't run submit_post before we checked for errors
+			* $mode is always edit as we just edit a post with this MOD
+			* $username is set to $user->data['username'] as we don't need the clean username for the logs
+			*/
+			submit_post('edit', $post_data['post_subject'], $user->data['username'], $post_data['topic_type'], $poll, $data);
 			echo($return); // this is needed in order to send the info back to the javascript backend
 		}
 		else
