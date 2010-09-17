@@ -162,7 +162,8 @@ function bind_quickedit_buttons()
 	$('#submit_jqe').bind('click', function() {
 		if(quickedit_open == true)
 		{
-			content = $('textarea#jqe-message').val();
+			content = $('textarea#jqe-message').serialize();
+			content = content.substring(8); // make sure we get rid of the 'message=' in front of the post text
 			cur_location = $(location).attr('href');
 			data = 'mode=submit&post_id=' + post_id + '&contents=' + content + '&location=' + location;
 			qe_do_ajax('submit', data);
@@ -185,7 +186,8 @@ function bind_quickedit_buttons()
 		{
 			// get current url for forum_id if we have a global announcement
 			cur_location = $(location).attr('href');
-			content = $('textarea#jqe-message').val();
+			content = $('textarea#jqe-message').serialize();
+			content = content.substring(8); // make sure we get rid of the 'message=' in front of the post text
 			data = 'mode=advanced_edit&post_id=' + post_id + '&contents=' + content + '&location=' + location;
 			qe_do_ajax('advanced_edit', data);
 			return false;
