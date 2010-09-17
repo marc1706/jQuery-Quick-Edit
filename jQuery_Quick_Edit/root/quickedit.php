@@ -151,7 +151,7 @@ switch($mode)
 		  include($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
 		}
 
-		$sql = 'SELECT p.*, f.*, t.*, u.*
+		$sql = 'SELECT p.*, f.*, t.*, u.*, p.icon_id AS post_icon_id
 				FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t, ' . FORUMS_TABLE . ' f, ' . USERS_TABLE . ' u
 				WHERE p.post_id = ' . (int)$post_id . ' 
 					AND p.topic_id = t.topic_id
@@ -299,18 +299,26 @@ switch($mode)
 		    // General Posting Settings
 		    'forum_id'          	=> $post_data['forum_id'],
 		    'topic_id'          	=> $post_data['topic_id'],
-		    'icon_id'           	=> $post_data['icon_id'],
+		    'icon_id'           	=> $post_data['post_icon_id'],
 		    'post_id'			=> $post_data['post_id'],
 		    'poster_id'			=> $post_data['poster_id'],
+		    'topic_replies'		=> $post_data['topic_replies'],
 		    'topic_replies_real'	=> $post_data['topic_replies_real'],
 		    'topic_first_post_id'	=> $post_data['topic_first_post_id'],
 		    'topic_last_post_id'	=> $post_data['topic_last_post_id'],
+		    'post_edit_user'		=> $edit_user,
+		    'forum_parents'		=> $post_data['forum_parents'],
+		    'forum_name'		=> $post_data['forum_name'],
 		
 		    // Defining Post Options
 		    'enable_bbcode' 	=> $post_data['enable_bbcode'],
 		    'enable_smilies'    => $post_data['enable_smilies'],
 		    'enable_urls'       => $post_data['enable_magic_url'],
 		    'enable_sig'        => $post_data['enable_sig'],
+		    'topic_attachment'	=> (isset($post_data['topic_attachment'])) ? (int) $post_data['topic_attachment'] : 0,
+		    'poster_ip'			=> (isset($post_data['poster_ip'])) ? $post_data['poster_ip'] : $user->ip,
+		    'attachment_data'	=> $message_parser->attachment_data,
+		    'filename_data'		=> $message_parser->filename_data,
 		
 		    // Message Body
 		    'message'           => $message_parser->message,
@@ -344,7 +352,6 @@ switch($mode)
 		    'poll_start'	=> $post_data['poll_start'],
 		    'poll_max_options'	=> $post_data['poll_max_options'],
 		    'poll_vote_change'	=> $post_data['poll_vote_change'],
-		    'poll_options'	=> array(),
 		);
 
 		// Get Poll Data
@@ -352,7 +359,7 @@ switch($mode)
 		{
 			$sql = 'SELECT poll_option_text
 				FROM ' . POLL_OPTIONS_TABLE . "
-				WHERE topic_id = $topic_id
+				WHERE topic_id = {$data['topic_id']}
 				ORDER BY poll_option_id";
 			$result = $db->sql_query($sql);
 
@@ -360,6 +367,24 @@ switch($mode)
 			{
 				$poll['poll_options'][] = trim($row['poll_option_text']);
 			}
+			$db->sql_freeresult($result);
+		}
+		
+		// Always check if the submitted attachment data is valid and belongs to the user.
+		// Further down (especially in submit_post()) we do not check this again.
+		$message_parser->get_submitted_attachment_data($post_data['poster_id']);
+
+		if ($post_data['post_attachment'])
+		{
+			// Do not change to SELECT *
+			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
+				FROM ' . ATTACHMENTS_TABLE . "
+				WHERE post_msg_id = $post_id
+					AND in_message = 0
+					AND is_orphan = 0
+				ORDER BY filetime DESC";
+			$result = $db->sql_query($sql);
+			$message_parser->attachment_data = array_merge($message_parser->attachment_data, $db->sql_fetchrowset($result));
 			$db->sql_freeresult($result);
 		}
 		
