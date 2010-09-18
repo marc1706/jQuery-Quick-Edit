@@ -136,18 +136,10 @@ function bind_quickedit_buttons()
 		cur_bbcode = $(this).attr('id');
 		cur_bbcode = cur_bbcode.replace(/bbcode/g, ''); // filter out unneeded parts
 		
+		// make sure we don't get javascript errors
 		if (cur_bbcode == parseInt(cur_bbcode))
 		{
 			qe_bbstyle(parseInt(cur_bbcode));
-		}
-		else
-		{
-			var bbcode = cur_bbcode.split(",");
-			var bbopen = jQuery.trim(bbcode[0]);
-			var bbclose = jQuery.trim(bbcode[1]);
-			bbopen = bbopen.substring(1, bbopen.length - 1);
-			bbclose = bbclose.substring(1, bbclose.length - 1);
-			qe_bbfontstyle(bbopen, bbclose);
 		}
 	});
 	

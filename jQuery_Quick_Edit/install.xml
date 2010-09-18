@@ -128,7 +128,6 @@
 				<find><![CDATA[</body>]]></find>
 				<action type="before-add"><![CDATA[<!-- JQuery Quickedit Pop Up -->
 <div id="popupQuickedit">  
-<!-- INCLUDE quickedit/quickedit.html -->
 </div>
 <div id="quickeditBackground"></div>
 <!-- JQuery Quickedit Pop Up END -->]]></action>
