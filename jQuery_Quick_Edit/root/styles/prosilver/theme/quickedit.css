@@ -5,8 +5,7 @@
 
 #quickeditBackground {  
 	display:none;  
-	position:fixed;  
-	_position:absolute; /* hack for internet explorer 6*/  
+	position:fixed;   
 	height:100%;  
 	width:100%;  
 	top:0;  
@@ -18,7 +17,6 @@
 #popupQuickedit{  
 	display:none;  
 	position:fixed;  
-	_position:absolute; /* hack for internet explorer 6*/  
 	height:384px;  
 	width:65%;  
 	background:#FFFFFF;  
@@ -66,7 +64,6 @@
 #quickeditError {
 	display:none;  
 	position:fixed;  
-	_position:absolute; /* hack for internet explorer 6*/  
 	height: auto;  
 	width: auto;
 	background:#FFFFFF;  
@@ -79,7 +76,6 @@
 #quickeditErrorBG {  
 	display:none;  
 	position:fixed;  
-	_position:absolute; /* hack for internet explorer 6*/  
 	height:100%;  
 	width:100%;  
 	top:0;  
