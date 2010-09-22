@@ -90,7 +90,8 @@
 
 #quickeditAction {
 	display: none;
-	position: -5000px -5000px;
+	top: -5000px; 
+	left: -5000px;
 }
 
 #jqe-adv-form {
@@ -99,4 +100,25 @@
 
 #jqe-adv-fieldset {
 	display: inline;
+}
+
+/*
+* Fixes for IE6 can be found below
+* It won't get beautiful in IE6, but it will work without bugs
+*/
+* html #quickeditBackground {
+	position: absolute;
+}
+
+* html #popupQuickedit {
+	position: absolute;
+	z-index: 0;
+}
+
+* html #quickeditError {
+	position: absolute;
+}
+
+* html #quickeditErrorBG {
+	position: absolute;
 }
