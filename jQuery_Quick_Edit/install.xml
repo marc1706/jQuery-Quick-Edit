@@ -120,16 +120,20 @@
 		<open src="styles/prosilver/template/overall_header.html">
 			<edit>
 				<find><![CDATA[</head>]]></find>
-				<action type="before-add"><![CDATA[<!-- INCLUDE quickedit/quickedit_header.html -->]]></action>
+				<action type="before-add"><![CDATA[<!-- IF S_VIEWTOPIC -->
+<!-- INCLUDE quickedit/quickedit_header.html -->
+<!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/template/overall_footer.html">
 			<edit>
 				<find><![CDATA[</body>]]></find>
 				<action type="before-add"><![CDATA[<!-- JQuery Quickedit Pop Up -->
+<!-- IF S_VIEWTOPIC -->
 <div id="popupQuickedit">  
 </div>
 <div id="quickeditBackground"></div>
+<!-- ENDIF -->
 <!-- JQuery Quickedit Pop Up END -->]]></action>
 			</edit>
 		</open>

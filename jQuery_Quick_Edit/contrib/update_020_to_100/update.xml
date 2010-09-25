@@ -43,10 +43,20 @@
 <div id="quickeditBackground"></div>
 <!-- JQuery Quickedit Pop Up END -->]]></find>
 				<action type="replace-with"><![CDATA[<!-- JQuery Quickedit Pop Up -->
+<!-- IF S_VIEWTOPIC -->
 <div id="popupQuickedit">  
 </div>
 <div id="quickeditBackground"></div>
+<!-- ENDIF -->
 <!-- JQuery Quickedit Pop Up END -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<!-- INCLUDE quickedit/quickedit_header.html -->]]></find>
+				<action type="replace-with"><![CDATA[<!-- IF S_VIEWTOPIC -->
+<!-- INCLUDE quickedit/quickedit_header.html -->
+<!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en">After editing all the files please do the following:
