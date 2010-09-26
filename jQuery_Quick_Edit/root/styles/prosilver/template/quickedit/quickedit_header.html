@@ -308,6 +308,7 @@ function qe_do_ajax(mode, data)
 	$.ajax({
 		type: 'POST',
 		data: data,
+		dataType: 'html',
 		url: '{U_QUICKEDIT}',
 		success: function(data){
 			if(mode == 'open')
