@@ -4,12 +4,15 @@
 <script type="text/javascript">
 // <![CDATA[
 /**
-* only load jQuery if the needed functions haven't been loaded yet
+* only load jQuery if hasn't been included yet
+* we just assume the complete jQuery library has been included if jQuery is present
+* if you want to always include jQuery, set "override_include" to "true"
 * this should help to get rid of the stack overflow error in IE
 */
-if(!jQuery && !jQuery.isFunction(jQuery.animate()) && !jQuery.isFunction(jQuery.bind()) !jQuery.isFunction(jQuery.ajax()))
+var override_include = false; // !! WARNING: This might cause stack overflow errors in IE !!
+if(!jQuery || override_include)
 {
-	getScript("{T_TEMPLATE_PATH}/quickedit/jquery-1.4.2.min.js");
+	getScript('{T_TEMPLATE_PATH}/quickedit/jquery-1.4.2.min.js');
 }
 
 // dynamically load any javascript file.
