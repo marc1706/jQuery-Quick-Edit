@@ -50,7 +50,6 @@
 					<change>[Change] Submitted to phpBB.com MOD-DB</change>
 					<change>[Change] Switched from SVN repository to Git</change>
 					<change>[Change] Removed version IDs from files</change>
-					<change></change>
 				</changelog>
 				<changelog lang="de">
 					<change>[Fix] Benutze submit_post zum editieren der Beiträge (Bug #65)</change>
