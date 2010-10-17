@@ -252,11 +252,11 @@ switch($mode)
 		{
 			// Do not change to SELECT *
 			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
-				FROM ' . ATTACHMENTS_TABLE . "
-				WHERE post_msg_id = $post_id
+				FROM ' . ATTACHMENTS_TABLE . '
+				WHERE post_msg_id = ' . (int)$post_id . '
 					AND in_message = 0
 					AND is_orphan = 0
-				ORDER BY filetime DESC";
+				ORDER BY filetime DESC';
 			$result = $db->sql_query($sql);
 			$message_parser->attachment_data = array_merge($message_parser->attachment_data, $db->sql_fetchrowset($result));
 			$db->sql_freeresult($result);
@@ -379,11 +379,11 @@ switch($mode)
 		{
 			// Do not change to SELECT *
 			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
-				FROM ' . ATTACHMENTS_TABLE . "
-				WHERE post_msg_id = $post_id
+				FROM ' . ATTACHMENTS_TABLE . '
+				WHERE post_msg_id = ' . (int)$post_id . '
 					AND in_message = 0
 					AND is_orphan = 0
-				ORDER BY filetime DESC";
+				ORDER BY filetime DESC';
 			$result = $db->sql_query($sql);
 			$message_parser->attachment_data = array_merge($message_parser->attachment_data, $db->sql_fetchrowset($result));
 			$db->sql_freeresult($result);
@@ -594,11 +594,11 @@ switch($mode)
 		{
 			// Do not change to SELECT *
 			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
-				FROM ' . ATTACHMENTS_TABLE . "
-				WHERE post_msg_id = $post_id
+				FROM ' . ATTACHMENTS_TABLE . '
+				WHERE post_msg_id = ' . (int)$post_id . '
 					AND in_message = 0
 					AND is_orphan = 0
-				ORDER BY filetime DESC";
+				ORDER BY filetime DESC';
 			$result = $db->sql_query($sql);
 			$message_parser->attachment_data = array_merge($message_parser->attachment_data, $db->sql_fetchrowset($result));
 			$db->sql_freeresult($result);
