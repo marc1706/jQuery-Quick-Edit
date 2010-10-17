@@ -332,6 +332,7 @@ switch($mode)
 		    'post_edit_locked'  => $post_data['post_edit_locked'],
 		    'post_edit_reason'	=> ($post_data['post_edit_reason']) ? $post_data['post_edit_reason'] : '',
 		    'topic_title'       => $post_data['topic_title'],
+		    'topic_time_limit'	=> ($post_data['topic_time_limit']) ? $post_data['topic_time_limit'] : 0,
 		
 		    // Email Notification Settings
 		    'notify_set'        => false,
