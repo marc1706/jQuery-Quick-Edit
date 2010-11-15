@@ -309,6 +309,7 @@ switch($mode)
 		    'post_edit_user'		=> $edit_user,
 		    'forum_parents'		=> $post_data['forum_parents'],
 		    'forum_name'		=> $post_data['forum_name'],
+		    'topic_poster'		=> $post_data['topic_poster'],
 		
 		    // Defining Post Options
 		    'enable_bbcode' 	=> $post_data['enable_bbcode'],
@@ -492,7 +493,7 @@ switch($mode)
 			* $mode is always edit as we just edit a post with this MOD
 			* $username is set to $user->data['username'] as we don't need the clean username for the logs
 			*/
-			submit_post('edit', $post_data['post_subject'], $user->data['username'], $post_data['topic_type'], $poll, $data);
+			submit_post('edit', $post_data['post_subject'], $post_data['username'], $post_data['topic_type'], $poll, $data);
 			echo($return); // this is needed in order to send the info back to the javascript backend
 		}
 		else
