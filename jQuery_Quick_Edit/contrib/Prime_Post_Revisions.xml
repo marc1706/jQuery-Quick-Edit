@@ -34,8 +34,12 @@
 				<action type="replace-with"><![CDATA[			$return = "0{/qe_seperator}0{/qe_seperator}0{/qe_seperator}$text"; ]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[			// Don't execute this before we checked for errors
-			$sql = 'UPDATE ' . POSTS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . " WHERE post_id = $post_id";	]]></find>
+				<find><![CDATA[			/* 
+			* Don't run submit_post before we checked for errors
+			* $mode is always edit as we just edit a post with this MOD
+			* $username is set to $user->data['username'] as we don't need the clean username for the logs
+			*/
+			submit_post('edit', $post_data['post_subject'], $post_data['username'], $post_data['topic_type'], $poll, $data);]]></find>
 				<action type="before-add"><![CDATA[//-- mod: Prime Post Revisions ----------------------------------------------//
 			$message_change = strcmp(trim(str_replace(':' . $uid, '', $message_parser->message)), trim(str_replace(':' . $post_data['bbcode_uid'], '', $post_data['post_text']))) != 0;
 			// Check to see if the message or subject line has changed.
