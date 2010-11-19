@@ -45,7 +45,7 @@
 			// Check to see if the message or subject line has changed.
 			if ($message_change)
 			{
-				$data = array(
+				$post_rev_data = array(
 					'post_id'				=> $post_id,
 					'post_edit_user'		=> $user->data['user_id'],
 					'bbcode_uid'			=> $uid,
@@ -55,9 +55,9 @@
 					'post_edit_reason' 		=> '',
 				);
 				include($phpbb_root_path . 'includes/prime_post_revisions.' . $phpEx);
-				store_post_revision_info($data, $post_data);
+				store_post_revision_info($post_rev_data, $data);
 			}
-//-- end: Prime Post Revisions ----------------------------------------------//	
+//-- end: Prime Post Revisions ----------------------------------------------//
 ]]></action>
 			</edit>
 		</open>
