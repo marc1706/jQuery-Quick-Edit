@@ -178,10 +178,10 @@ switch($mode)
 		}
 		
 		// HTML, BBCode, Smilies, Images and Flash status
-		$bbcode_status	= ($config['allow_bbcode'] && ($auth->acl_get('f_bbcode', $post_data['forum_id']) || $post_data['forum_id'] == 0)) ? true : false;
-		$smilies_status	= ($bbcode_status && $config['allow_smilies'] && $auth->acl_get('f_smilies', $post_data['forum_id'])) ? true : false;
-		$img_status		= ($bbcode_status && $auth->acl_get('f_img', $post_data['forum_id'])) ? true : false;
-		$url_status		= ($config['allow_post_links']) ? true : false;
+		$bbcode_status	= ($config['allow_bbcode'] && ($auth->acl_get('f_bbcode', $post_data['forum_id']) || $post_data['forum_id'] == 0) && $post_data['enable_bbcode']) ? true : false;
+		$smilies_status	= ($bbcode_status && $config['allow_smilies'] && $auth->acl_get('f_smilies', $post_data['forum_id']) && $post_data['enable_smilies']) ? true : false;
+		$img_status	= ($bbcode_status && $auth->acl_get('f_img', $post_data['forum_id'])) ? true : false;
+		$url_status	= ($config['allow_post_links'] && $post_data['enable_magic_url']) ? true : false;
 		$flash_status	= ($bbcode_status && $auth->acl_get('f_flash', $post_data['forum_id']) && $config['allow_post_flash']) ? true : false;
 		$quote_status	= ($auth->acl_get('f_reply', $post_data['forum_id'])) ? true : false;
 		
