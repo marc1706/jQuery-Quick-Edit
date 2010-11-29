@@ -15,11 +15,11 @@
 				<email><![CDATA[admin@m-a-styles.de]]></email>
 			</author>
 		</author-group>
-		<mod-version>1.0.0</mod-version>
+		<mod-version>1.0.1</mod-version>
 		<installation>
 			<level>easy</level>
 			<time>300</time>
-			<target-version>3.0.7-PL1</target-version>
+			<target-version>3.0.8</target-version>
 		</installation>
 		<link-group>
 			<link type="template" href="contrib/subsilver2.xml" lang="en">Subsilver2 Instructions</link>
@@ -34,6 +34,20 @@
 			<link type="contrib" href="contrib/update_021_to_100/update.xml" lang="de">Aktualisiere 0.2.1 zu 1.0.0</link>
 		</link-group>
 		<history>
+			<entry>
+				<date>2011-01-01</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="en">
+					<change>[Fix] Wrong Topic author after Quickedit (Bug #73)</change>
+					<change>[Fix] Bug in Prime Post Revisions Add-On that caused jQE to break</change>
+					<change>[Fix] BBCode, smilies and URLs are always parsed (Bug #74)</change>
+				</changelog>
+				<changelog lang="de">
+					<change>[Fix] Falscher Topic Autor nach dem Quickedit (Bug #73)</change>
+					<change>[Fix] Fehler im Prime Post Revisions Add-On das dafür sorgt, dass jQE nicht mehr funktioniert</change>
+					<change>[Fix] BBCode, Smilies und URLs werden immer geparst (Bug #74)</change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2010-09-27</date>
 				<rev-version>1.0.0</rev-version>
