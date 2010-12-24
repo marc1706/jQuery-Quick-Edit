@@ -43,6 +43,10 @@ function qe_centerPopup()
 	var windowHeight = document.documentElement.clientHeight;
 	var popupHeight = $("#popupQuickedit").height();
 	var popupWidth = $("#popupQuickedit").width();
+	if(popupHeight == 0)
+	{
+		popupHeight = 364; // provide a height for the first time
+	}
 	//centering
 	$("#popupQuickedit").css({
 	"position": "absolute",
@@ -72,16 +76,17 @@ function loadQEError()
 //centering popup
 function centerQEError()
 {
-	//request data for centering
-	var popupOffset = $('#popupQuickedit').offset();
-	var popupTop = popupOffset.top;
-	var popupLeft = popupOffset.left;
-	var scroll = $(window).scrollTop();
-	var popupHeight = $('#popupQuickedit').height();
 	var windowHeight = document.documentElement.clientHeight;
-	var windowWidth = (document.documentElement.clientWidth)/2;
-	var newTop = windowHeight/2 - popupHeight/2;
-	var newLeft = (windowWidth/2) - popupLeft/2;
+	var windowWidth = (document.documentElement.clientWidth);	
+	//request data for centering
+	var popupWidth = $('#popupQuickedit').width();
+	var errorWidth = 250;
+	var errorHeight = windowHeight * 0.1;
+	var popupHeight = $('#popupQuickedit').height();
+	var popupOffset = $('#popupQuickedit').offset();
+	var popupLeft = popupOffset.left;
+	var newTop = (popupHeight/2) - (errorHeight/2);
+	var newLeft = (popupWidth/2) - (errorWidth/2) + popupLeft;
 	//centering
 	$('#quickeditError').css({
 	"position": "absolute",

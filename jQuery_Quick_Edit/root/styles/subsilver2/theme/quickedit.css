@@ -64,13 +64,15 @@
 #quickeditError {
 	display:none;  
 	position:fixed;    
-	height: auto;  
-	width: auto;
+	height: 10%;  
+	width: 250px;
 	background:#FFFFFF;  
 	border:2px solid #cecece;  
 	z-index:2;  
 	padding:12px;  
-	font-size:13px; 
+	font-size:13px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 #quickeditErrorBG {  
