@@ -109,7 +109,7 @@
 	<action-group>
 		<copy>
 			<file from="root/quickedit.php" to="quickedit.php" />
-			<file from="root/styles/prosilver/imageset/en/icon_post_quickedit.gif" to="styles/prosilver/imageset/en/icon_post_quickedit.gif" />
+			<file from="root/styles/prosilver/imageset/en/*.*" to="styles/prosilver/imageset/en/*.*" />
 			<file from="root/styles/prosilver/template/*.*" to="styles/prosilver/template/*.*" />
 			<file from="root/styles/prosilver/theme/quickedit.css" to="styles/prosilver/theme/quickedit.css" />
 		</copy>

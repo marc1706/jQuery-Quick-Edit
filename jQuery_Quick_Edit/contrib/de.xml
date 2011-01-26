@@ -47,7 +47,7 @@
 		</open>
 		<open src="styles/prosilver/imageset/de/imageset.cfg">
 			<edit>
-				<find><![CDATA[img_icon_post_edit = icon_post_edit.gif*20*42]]></find>
+				<find><![CDATA[img_icon_post_edit = icon_post_edit.gif*20*61]]></find>
 				<action type="after-add"><![CDATA[img_icon_post_quickedit = icon_post_quickedit.gif*20*74]]></action>
 			</edit>
 		</open>
